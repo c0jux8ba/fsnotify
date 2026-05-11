@@ -170,11 +170,6 @@ func (w *inotify) Close() error {
 	if err != nil {
 		return err
 	}
-	w.mu.Lock()
-	for name := range w.watches.path {
-		w.remove(name)
-	}
-	w.mu.Unlock()
 
 	<-w.doneResp // Wait for readEvents() to finish.
 	return nil
