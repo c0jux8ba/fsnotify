@@ -34,6 +34,7 @@ func (e Event) String() string {
 }
 
 // String returns a human-readable description of the operation(s).
+// Multiple operations are joined with "|" (e.g. "CREATE|WRITE").
 func (op Op) String() string {
 	var sb strings.Builder
 
@@ -71,6 +72,8 @@ var (
 
 	// ErrEventOverflow is returned when the kernel event buffer is full.
 	// This can happen if events are not consumed fast enough.
+	// To avoid this, ensure your event handler processes events quickly or
+	// offloads work to a separate goroutine.
 	ErrEventOverflow = errors.New("fsnotify: queue or buffer overflow")
 
 	// ErrClosed is returned when the watcher is closed.
